@@ -1,3 +1,5 @@
+import os
+
 """
 Django settings for todolist project.
 
@@ -60,16 +62,37 @@ WSGI_APPLICATION = "todolist.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'app_db',
-        'USER': 'app_user',
-        'PASSWORD': '1234',
-        'HOST': 'mysql',  # You can use a different host if your MySQL server is on a remote machine.
-        'PORT': '',  # Leave this empty to use the default MySQL port (3306).
+        'ENGINE': os.environ.get('ENGINE', 'django.db.backends.mysql'),
+        'NAME': os.environ.get('NAME', 'app_db'),
+        'USER': os.environ.get('USER', 'app_user'),
+        'PASSWORD': os.environ.get('PASSWORD', 'your_password_here'),
+        'HOST': os.environ.get('HOST', 'mysql'),
+        'PORT': os.environ.get('PORT', '3306'),
     }
 }
+
+if 'sqlite' in DB_ENGINE or DB_ENGINE == 'django.db.backends.sqlite3':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.getenv('NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': DB_ENGINE,
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DB_HOST,
+            'PORT': DB_PORT,
+        }
+    }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/

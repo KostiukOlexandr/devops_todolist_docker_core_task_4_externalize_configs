@@ -14,7 +14,7 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 
 COPY --from=builder /app .
-COPY wait-for-it.sh .
+
 
 RUN chmod +x wait-for-it.sh
 RUN pip install --upgrade pip && \
