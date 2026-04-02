@@ -74,24 +74,6 @@ DATABASES = {
     }
 }
 
-if 'sqlite' in DB_ENGINE or DB_ENGINE == 'django.db.backends.sqlite3':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.getenv('NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': DB_ENGINE,
-            'NAME': DB_NAME,
-            'USER': DB_USER,
-            'PASSWORD': DB_PASSWORD,
-            'HOST': DB_HOST,
-            'PORT': DB_PORT,
-        }
-    }
 
 
 # Internationalization
